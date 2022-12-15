@@ -12,15 +12,20 @@ app.use(express.json());
 const PORT = process.env.PORT || 8000;
 
 const pool = new Pool({
-  user: "postgres",
-  host: "db.hiveudcgebrgnfoerpzt.supabase.co",
-  database: "postgres",
-  password: "g@y7!jZ6iP@B9AE",
+  user: "monika",
+  host: "dpg-cect7fqrrk0dhqqi5afg-a",
+  database: "facerecognition_f4bi",
+  password: "WCda5E6FHruiCbxCeGKydlvo9H1pxpIZ",
   port: 5432,
 });
 
 app.get("/", (req, res, next) => {
-  res.send(usersData);
+  pool
+    .query("select * FROM users")
+    .then((result) => res.send(result.rows))
+    .catch((err) => {
+      res.status(500).json(err);
+    });
 });
 
 app.post("/signIn", (req, res) => {
